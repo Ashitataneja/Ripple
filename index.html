@@ -9,6 +9,21 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // If this file is ever served unbuilt (e.g. GitHub Pages set to "Deploy from a branch"),
+      // the app script cannot run. Explain that instead of leaving a blank page.
+      setTimeout(function () {
+        var root = document.getElementById('root');
+        if (root && !root.hasChildNodes()) {
+          root.innerHTML =
+            '<div style="font:15px/1.6 system-ui,sans-serif;color:#cfdbe3;max-width:560px;margin:18vh auto;padding:0 20px">' +
+            '<h1 style="font-weight:300;letter-spacing:.3em">RIPPLE</h1>' +
+            '<p>The app did not start. If this is GitHub Pages, the repository files are being served unbuilt: ' +
+            'open <b>Settings → Pages</b> and set <b>Source</b> to <b>GitHub Actions</b>, then reload.</p>' +
+            '<p>Running locally? Use <code>npm install</code> and <code>npm run dev</code>.</p></div>';
+        }
+      }, 4000);
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

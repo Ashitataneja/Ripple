@@ -27,10 +27,8 @@ jobs:
         uses: actions/configure-pages@v5
       - run: npm ci
       - run: npm test
+      # Relative asset paths (vite.config.ts) work under the /<repo>/ project URL in any letter case.
       - run: npm run build
-        env:
-          # e.g. "/Ripple" — makes every asset, the model and the WASM paths resolve under the project URL.
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

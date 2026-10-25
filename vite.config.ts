@@ -3,8 +3,9 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  // GitHub Pages serves project sites under /<repo>/; the deploy workflow sets BASE_PATH.
-  base: process.env.BASE_PATH ? `${process.env.BASE_PATH.replace(/\/$/, '')}/` : '/',
+  // Relative asset paths: the build works at any sub-path (e.g. GitHub Pages' /<repo>/) and in any
+  // letter case. BASE_PATH can still force an absolute base for hosts that need one.
+  base: process.env.BASE_PATH ? `${process.env.BASE_PATH.replace(/\/$/, '')}/` : './',
   plugins: [react()],
   server: { host: 'localhost', port: 5173 },
   // The hand-tracking worker is a module worker (it lazy-loads MediaPipe).
