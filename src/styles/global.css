@@ -1,0 +1,384 @@
+:root {
+  --ink: #05080b;
+  --mist: rgba(214, 226, 234, 0.92);
+  --mist-dim: rgba(190, 206, 218, 0.62);
+  --line: rgba(190, 210, 225, 0.28);
+  --panel: rgba(8, 13, 18, 0.42);
+  --font: 'Inter', 'Helvetica Neue', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--mist);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+.app {
+  position: fixed;
+  inset: 0;
+}
+
+/* --- The water ---------------------------------------------------------------------------- */
+
+.water {
+  position: absolute;
+  inset: 0;
+}
+
+.water-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --- Landing ------------------------------------------------------------------------------ */
+
+.landing {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  pointer-events: none; /* the water stays touchable behind the title */
+  text-align: center;
+  padding: 24px;
+  transition:
+    opacity 1.6s ease,
+    filter 1.6s ease;
+}
+
+.landing--gone {
+  opacity: 0;
+  filter: blur(6px);
+}
+
+.landing--gone .landing__enter {
+  pointer-events: none;
+}
+
+.landing__title {
+  margin: 0;
+  font-weight: 200;
+  font-size: clamp(42px, 9vw, 112px);
+  letter-spacing: 0.62em;
+  margin-right: -0.62em; /* optically recentre tracked text */
+  color: rgba(226, 236, 242, 0.9);
+  text-shadow: 0 0 40px rgba(120, 160, 190, 0.18);
+}
+
+.landing__subtitle {
+  margin: 18px 0 44px;
+  font-weight: 300;
+  font-size: clamp(14px, 1.6vw, 17px);
+  letter-spacing: 0.08em;
+  color: var(--mist-dim);
+}
+
+.landing__enter {
+  pointer-events: auto;
+  appearance: none;
+  background: rgba(10, 16, 22, 0.25);
+  color: var(--mist);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 14px 30px 14px 34px;
+  font: 400 12px/1 var(--font);
+  letter-spacing: 0.32em;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition:
+    background 0.4s ease,
+    border-color 0.4s ease,
+    color 0.4s ease;
+}
+
+.landing__enter:hover,
+.landing__enter:focus-visible {
+  background: rgba(30, 44, 56, 0.45);
+  border-color: rgba(200, 220, 235, 0.55);
+  color: #fff;
+  outline: none;
+}
+
+/* --- Hint --------------------------------------------------------------------------------- */
+
+.hint {
+  position: absolute;
+  left: 50%;
+  bottom: max(48px, env(safe-area-inset-bottom));
+  transform: translate(-50%, 8px);
+  max-width: calc(100vw - 32px);
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--mist-dim);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s ease;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
+}
+
+.hint--visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* --- HUD ---------------------------------------------------------------------------------- */
+
+.hud {
+  position: absolute;
+  left: max(16px, env(safe-area-inset-left));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  opacity: 0.5;
+  transition: opacity 0.6s ease;
+  animation: hud-in 2s ease both;
+}
+
+.hud:hover,
+.hud:focus-within {
+  opacity: 0.95;
+}
+
+@keyframes hud-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.hud__buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.hud__button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  min-width: 36px;
+  justify-content: center;
+  padding: 0 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--mist);
+  cursor: pointer;
+  font: 400 11px/1 var(--font);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.hud__button-text {
+  padding-right: 4px;
+}
+
+.hud__button:hover,
+.hud__button:focus-visible {
+  background: rgba(30, 44, 56, 0.6);
+  border-color: rgba(200, 220, 235, 0.5);
+  outline: none;
+}
+
+.hud__button--on {
+  border-color: rgba(150, 200, 225, 0.55);
+  color: #e6f3fa;
+}
+
+.hud__button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.hud__stats {
+  font: 400 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--mist-dim);
+}
+
+.camera-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mist-dim);
+  max-width: min(360px, calc(100vw - 32px));
+}
+
+.camera-status__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(150, 165, 175, 0.5);
+}
+
+.camera-status__dot--starting,
+.camera-status__dot--loading-model {
+  background: rgba(200, 190, 140, 0.8);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.camera-status__dot--active {
+  background: rgba(150, 200, 225, 0.6);
+}
+
+.camera-status__dot--tracking {
+  background: rgba(140, 220, 200, 0.95);
+  box-shadow: 0 0 8px rgba(140, 220, 200, 0.6);
+}
+
+.camera-status__dot--error {
+  background: rgba(225, 130, 120, 0.9);
+}
+
+.camera-status__message {
+  flex-basis: 100%;
+  margin: 2px 0 0;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(235, 200, 190, 0.85);
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* --- Camera preview ----------------------------------------------------------------------- */
+
+.camera-preview {
+  position: absolute;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  width: 168px;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0.55;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.camera-preview__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.6) brightness(0.8);
+}
+
+.camera-preview__video--mirrored {
+  transform: scaleX(-1);
+}
+
+.camera-preview__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 560px) {
+  .camera-preview {
+    width: 112px;
+  }
+  .hud__button-text {
+    display: none;
+  }
+}
+
+/* --- Fatal error ------------------------------------------------------------------------- */
+
+.error-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background: radial-gradient(ellipse at center, #0b1219 0%, var(--ink) 70%);
+}
+
+.error-state h2 {
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  margin: 0 0 12px;
+}
+
+.error-state p {
+  max-width: 520px;
+  color: var(--mist-dim);
+  line-height: 1.6;
+  margin: 0 0 8px;
+  overflow-wrap: anywhere;
+}
+
+.error-state__help {
+  font-size: 13px;
+}
+
+.error-state button {
+  margin-top: 20px;
+  appearance: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--mist);
+  border-radius: 999px;
+  padding: 10px 22px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing,
+  .hint,
+  .hud {
+    transition-duration: 0.01s;
+    animation: none;
+  }
+}
