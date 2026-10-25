@@ -84,8 +84,8 @@ body,
   font-size: clamp(42px, 9vw, 112px);
   letter-spacing: 0.62em;
   margin-right: -0.62em; /* optically recentre tracked text */
-  color: rgba(226, 236, 242, 0.9);
-  text-shadow: 0 0 40px rgba(120, 160, 190, 0.18);
+  color: rgba(240, 248, 252, 0.95);
+  text-shadow: 0 2px 30px rgba(0, 30, 70, 0.45), 0 0 2px rgba(0, 30, 70, 0.3);
 }
 
 .landing__subtitle {
@@ -93,7 +93,8 @@ body,
   font-weight: 300;
   font-size: clamp(14px, 1.6vw, 17px);
   letter-spacing: 0.08em;
-  color: var(--mist-dim);
+  color: rgba(232, 242, 248, 0.88);
+  text-shadow: 0 1px 14px rgba(0, 30, 70, 0.6);
 }
 
 .landing__enter {
@@ -134,7 +135,7 @@ body,
   font-weight: 300;
   font-size: 14px;
   letter-spacing: 0.1em;
-  color: var(--mist-dim);
+  color: rgba(232, 242, 248, 0.9);
   text-align: center;
   opacity: 0;
   pointer-events: none;

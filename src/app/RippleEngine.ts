@@ -10,6 +10,7 @@ import { InteractionController } from '../interaction/InteractionController';
 import { PointerController } from '../interaction/PointerController';
 import { initialQualityLevel, PerformanceMonitor, QUALITY_LEVELS } from '../performance/PerformanceMonitor';
 import type { BoundaryMode } from '../water/simulationParams';
+import { LOOKS, type LookName } from '../water/WaterMaterial';
 import { WaterRenderer, type WaterCursor } from '../water/WaterRenderer';
 import { WaterSimulation } from '../water/WaterSimulation';
 import { createInteractionState, type InteractionState } from './interactionState';
@@ -34,6 +35,8 @@ export interface EngineOptions {
   forceCpuSimulation?: boolean;
   quality?: number;
   debug?: boolean;
+  /** Colour preset: bright open water (default) or the moonlit pond. */
+  look?: LookName;
 }
 
 const CALIBRATION_KEY = 'ripple.calibration.v1';
@@ -132,7 +135,7 @@ export class RippleEngine {
     this.sim = new WaterSimulation(this.renderer, { resolution: quality.simResolution, boundary: options.boundary ?? 'absorb', forceCpu: options.forceCpuSimulation });
     // Simulation shader failures are handled by its CPU fallback; only later failures are fatal.
     const simShaderErrors = shaderErrors.length;
-    this.water = new WaterRenderer(this.renderer, this.sim);
+    this.water = new WaterRenderer(this.renderer, this.sim, LOOKS[options.look ?? 'day']);
     this.water.setMeshDivisor(quality.meshDivisor);
     this.water.particles.enabled = quality.particles;
 

@@ -7,7 +7,7 @@ pinch and drop a pebble, drag your hand through the surface or sweep a wave acro
 the ripples spread, overlap, catch the moonlight and settle back into silence. Mouse and touch drive
 exactly the same water when no camera is used.
 
-![A dark pond with interfering ripples, a pebble splash and the moon's reflection breaking into glitter](docs/screenshot.png)
+![Bright azure water with interfering ripples, sun glitter and a foaming pebble splash](docs/screenshot.png)
 
 The water is a real-time GPU height-field simulation, not animated circles over a picture. It is a
 convincing approximation, not a physically exact fluid model.
@@ -93,6 +93,7 @@ The calibration is remembered in `localStorage`.
 | `?quality=0…3` | Pin a quality level (0 = best) and disable adaptation |
 | `?sim=cpu` | Force the CPU simulation fallback |
 | `?boundary=reflect` | Waves reflect off the edges instead of being absorbed |
+| `?mood=night` | The original dark, moonlit pond instead of the bright daytime water |
 
 ---
 

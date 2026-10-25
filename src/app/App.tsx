@@ -14,6 +14,7 @@ function readOptions(): EngineOptions & { debug: boolean } {
     forceCpuSimulation: params.get('sim') === 'cpu',
     quality: quality !== null && quality !== '' ? Number(quality) : undefined,
     debug: params.has('debug'),
+    look: params.get('mood') === 'night' ? 'night' : 'day',
   };
 }
 

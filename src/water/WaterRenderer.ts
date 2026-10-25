@@ -4,7 +4,7 @@ import { PEBBLE } from '../interaction/PebbleSystem';
 import type { WaterDomain, WaterMapping, WorldPoint } from '../interaction/types';
 import { bakeFloorTexture } from './FloorGenerator';
 import { SplashParticles } from './SplashParticles';
-import { createPebbleMaterial, createWaterMaterial, LIGHTING, MAX_CURSORS, MAX_SHADOWS } from './WaterMaterial';
+import { createPebbleMaterial, createWaterMaterial, LIGHTING, MAX_CURSORS, MAX_SHADOWS, type WaterLook } from './WaterMaterial';
 import type { WaterSimulation } from './WaterSimulation';
 
 export const VIEW = {
@@ -52,6 +52,7 @@ export class WaterRenderer implements WaterMapping {
   constructor(
     private readonly renderer: THREE.WebGLRenderer,
     private readonly sim: WaterSimulation,
+    look?: WaterLook,
   ) {
     const t = THREE.MathUtils.degToRad(VIEW.tilt);
     this.camera.position.set(0, VIEW.distance * Math.cos(t), VIEW.distance * Math.sin(t));
@@ -59,7 +60,7 @@ export class WaterRenderer implements WaterMapping {
 
     const floorSize = renderer.capabilities.maxTextureSize >= 2048 ? 1024 : 512;
     this.floorTarget = bakeFloorTexture(renderer, floorSize);
-    this.material = createWaterMaterial({ floor: this.floorTarget.texture, floorTile: VIEW.floorTile, depth: VIEW.waterDepth, heightScale: VIEW.heightScale });
+    this.material = createWaterMaterial({ floor: this.floorTarget.texture, floorTile: VIEW.floorTile, depth: VIEW.waterDepth, heightScale: VIEW.heightScale, look });
     this.surface = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), this.material);
     this.surface.frustumCulled = false;
     this.scene.add(this.surface);
