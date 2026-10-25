@@ -35,6 +35,15 @@ origins.
 | `npm run typecheck` | Type-check only |
 | `npm run fetch-model` | Download the hand landmarker model (`--force` to re-download) |
 
+### Deploying (GitHub Pages)
+
+Pushes to `main` run `.github/workflows/deploy.yml`, which tests, builds with the repository's
+base path (`BASE_PATH`, e.g. `/Ripple`) and publishes `dist/`. In the repository's
+**Settings → Pages**, set **Source** to **GitHub Actions**. Serving the repository files directly
+("Deploy from a branch") shows a blank page, because browsers cannot run the unbuilt TypeScript
+source. For any other static host, run `npm run build` (with `BASE_PATH=/sub/path` if it is not
+served from the domain root) and upload `dist/`.
+
 Requirements: Node 18+ and a browser with WebGL 2. The simulation prefers float render targets
 (`EXT_color_buffer_float`) and falls back automatically (see *Reliability*).
 
